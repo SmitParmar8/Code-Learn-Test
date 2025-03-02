@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Practice</title>
+    <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.34.2/src-min-noconflict/ace.js"></script>
+    <link rel="stylesheet" href="java.css">
+    <script>
+        
+        function runJavaPrint() {
+            return "Hello World"; 
+        }
+        function runJavaSum() {
+            var a = 5, b = 3;
+            var sum = a + b;
+            return "Sum: " + sum;
+        }
+        function runJavaMul() {
+            var a = 4, b = 6;
+            var product = a * b;
+            return "Product: " + product;
+        }
+        function runJavaIfElse() {
+            var x = 10;
+            if (x > 5) {
+                return "x is greater than 5";
+            } else {
+                return "x is 5 or less";
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>CodeLearn&Test</h1>
+        <nav class="navbar">
+            <div class="container">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="lern.html" class="nav-link">Learn</a>
+                <a href="contactus.html" class="nav-link">ContactUS</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+<!-- container -->
+    <div class="container">
+        <div class="headers">
+            <h2 onclick="showDescription('print')">Print</h2>
+            <h2 onclick="showDescription('sum')">Sum</h2>
+            <h2 onclick="showDescription('mul')">Mul</h2>
+            <h2 onclick="showDescription('ifelse')">If..Else</h2>
+        </div>
+
+        <div id="section">
+<!-- print -->
+            <div id="print" style="display: none; margin-left: 20px;">
+                <p id="p1">Prints text or values to the console.</p>
+                <p id="p2">Syntax: System.out.println("text");</p>
+                <button onclick="loadCode('print')">Try Now</button>
+            </div>
+          <!-- sum -->
+            <div id="sum" style="display: none; margin-left: 20px;">
+                <p id="p1">Adds two numbers and displays the result.</p>
+                <p id="p2">Syntax: int sum = a + b;</p>
+                <button onclick="loadCode('sum')">Try Now</button>
+            </div>
+            <!-- mul -->
+            <div id="mul" style="display: none; margin-left: 20px;">
+                <p id="p1" >Multiplies two numbers and shows the product.</p>
+                <p id="p2">Syntax: int product = a * b;</p>
+                <button onclick="loadCode('mul')">Try Now</button>
+            </div>
+            <!-- if else -->
+            <div id="ifelse" style="display: none; margin-left: 20px;">
+                <p id="p1">Executes code based on a condition.</p>
+                <p id="p2">Syntax: if (condition) { } else { }</p>
+                <button onclick="loadCode('ifelse')">Try Now</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Right Section: Editor and Output -->
+    <div class="cont" >
+        <div id="editor" style=></div>
+        <div id="output">
+            Output will appear here
+        </div>
+    </div>
+    <button class="run" onclick="runCode()">Run</button>
+    
+</main>
+
+    <!-- JavaScript for interactivity -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize Ace Editor
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            editor.session.setMode("ace/mode/java");
+            editor.setFontSize(14);
+            editor.setValue(`public class Main {
+    public static void main(String[] args) {
+        System.out.println("Click a topic to load code");
+    }
+}`, -1);
+
+    window.showDescription = function(id) {
+        
+        var descriptionIds = ['print', 'sum', 'mul', 'ifelse'];
+        descriptionIds.forEach(function(descId) {
+            document.getElementById(descId).style.display = "none";
+        });
+        
+        document.getElementById(id).style.display = "block";
+    }
+            
+            window.loadCode = function(topic) {
+                var codeMap = {
+                    "print": `public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+}`,
+                    "sum": `public class Main {
+    public static void main(String[] args) {
+        int a = 5;
+        int b = 3;
+        int sum = a + b;
+        System.out.println("Sum: " + sum);
+    }
+}`,
+                    "mul": `public class Main {
+    public static void main(String[] args) {
+        int a = 4;
+        int b = 6;
+        int product = a * b;
+        System.out.println("Product: " + product);
+    }
+}`,
+                    "ifelse": `public class Main {
+    public static void main(String[] args) {
+        int x = 10;
+        if (x > 5) {
+            System.out.println("x is greater than 5");
+        } else {
+            System.out.println("x is 5 or less");
+        }
+    }
+}`
+                };
+                editor.setValue(codeMap[topic], -1);
+                document.getElementById("output").innerText = "Click Run to see output";
+            }
+
+            
+            window.runCode = function() {
+                var code = editor.getValue();
+                var output = "";
+                if (code.includes('println("Hello World")')) {
+                    output = runJavaPrint();
+                } else if (code.includes("int sum = a + b")) {
+                    output = runJavaSum();
+                } else if (code.includes("int product = a * b")) {
+                    output = runJavaMul();
+                } else if (code.includes("if (x > 5)")) {
+                    output = runJavaIfElse();
+                } else {
+                    output = "Code not recognized. Please use the provided examples.";
+                }
+                document.getElementById("output").innerText = output;
+            }
+        });
+    </script>
+</body>
+</html>
